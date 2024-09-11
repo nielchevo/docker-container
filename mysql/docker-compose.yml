@@ -3,13 +3,15 @@ services:
   db:
     image: mysql:8.0.32
     restart: always
-    environment: 
-      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+    environment:
+      - MYSQL_USER: root
+      - MYSQL_PASSWORD: Password@1
+      - MYSQL_ROOT_PASSWORD: Password@1
     ports:
       - '3306:3306'
     volumes:
       - db:/var/lib/mysql
       - ./init-dump:/docker-entrypoint-initdb.d
 volumes:
-  db: 
+  db:
     driver: local
