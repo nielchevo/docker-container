@@ -1,21 +1,17 @@
-version: '3.8'
+version: "3.8"
 services:
   db:
     container_name: postgresql
     build:
       context: .
       dockerfile: postgis.Dockerfile
-    image: postgres:14.9
     restart: always
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=Password1@
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - PGDATA=/var/lib/postgresql/data/pgdata
     ports:
-      - '5432:5432'
+      - "5432:5432"
     volumes:
       - ./db:/docker-entrypoint-initdb.d/
-      - db:/var/lib/postgres/data
-volumes:
-  db:
-    driver: local
+      - ./data:/var/lib/postgresql/data
