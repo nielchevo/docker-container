@@ -1,7 +1,7 @@
-version: "3.8"
 services:
   cache:
-    image: redis:6.2-alpine
+    container_name: "redis"
+    image: redis:7.0-alpine
     restart: always
     environment:
       - REDIS_PASSWORD=mysecretpassword # Set a password for Redis (adjust as needed)
@@ -9,7 +9,7 @@ services:
       - "6379:6379"
     command: redis-server --loglevel notice # Less verbose logging level
     volumes:
-      - db:/data
+      - data:/data
 volumes:
-  db:
+  data:
     driver: local
