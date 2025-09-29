@@ -3,13 +3,18 @@ services:
   db:
     image: mvertes/alpine-mongo:latest
     restart: always
-    environment: 
+    environment:
      - MONGO_INITDB_ROOT_USERNAME=root
      - MONGO_INITDB_ROOT_PASSWORD=Password2
     ports:
      - '27017:27017'
     volumes:
       - db:/data/db
+    networks:
+      - defaults
+networks:
+  defaults:
+    external: true
 volumes:
-  db: 
+  db:
     driver: local

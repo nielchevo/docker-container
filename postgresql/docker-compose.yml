@@ -15,6 +15,11 @@ services:
     volumes:
       - ./db:/docker-entrypoint-initdb.d/
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - defaults
+networks:
+  defaults:
+    external: true
 volumes:
   postgres_data:
     driver: local
