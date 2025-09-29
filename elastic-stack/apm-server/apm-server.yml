@@ -1,0 +1,30 @@
+apm-server:
+  host: "0.0.0.0:8200"
+  #frontend:
+  # enabled: true
+  #  frontend.allow_origin: '*'
+  # auth:
+  #   secret_token: 'changeme'
+  #   anonymous:
+  #     enabled: true
+  # kibana:
+  #   enabled: true
+  #   host: "http://kibana:5601"
+  # monitoring:
+  #   enabled: true
+  #   hosts: ["http://elasticsearch:9200"]
+  #   username: 'elastic'
+  #   password: 'changeme'
+#rum:
+#  enabled: true
+#  allow_origins: ['*']
+output.elasticsearch:
+  enabled: true
+  hosts: ["http://elasticsearch:9200"]
+  username: 'elastic'
+  password: 'changeme'
+
+setup.kibana:
+  host: "http://kibana:5601"
+  username: 'elastic'
+  password: 'changeme'
