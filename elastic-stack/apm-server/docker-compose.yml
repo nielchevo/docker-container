@@ -7,13 +7,9 @@ services:
       - elastic
     ports:
       - "8200:8200"
-    # environment:
-    #  - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
-    #   - ELASTICSEARCH_USERNAME=kibana_system
-    #   - ELASTIC_PASSWORD=changeme
-    #- KIBANA_HOSTS=http://kibana:5601
     volumes:
-      - ./apm-server.yml:/usr/share/apm-server/apm-server.yml
+      - ./apm-server.yml:/usr/share/apm-server/apm-server.yml:ro
+
 networks:
   elastic:
     external: true

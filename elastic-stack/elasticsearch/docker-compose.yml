@@ -4,16 +4,14 @@ services:
     container_name: elasticsearch
     restart: always
     environment:
+      - node.name=elasticsearch
+      - cluster.name=docker-cluster
       - discovery.type=single-node
-      #- ES_JAVA_OPTS=-Xms1g -Xmx1g
-      - ELASTIC_USERNAME=elastic
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=true
       - ELASTIC_PASSWORD=changeme
-      #- ELASTICSEARCH_USERNAME=elastic
-      #- ELASTICSEARCH_PASSWORD=changeme
-      #- bootstrap.memory_lock=true
-      #- xpack.security.enabled=true
-      #- xpack.security.http.ssl.enabled=true
-      #- xpack.security.transport.ssl.enabled=true
+      - xpack.security.http.ssl.enabled=false
+      - xpack.security.transport.ssl.enabled=false
     ports:
       - "9200:9200"
     networks:
@@ -28,9 +26,11 @@ services:
       nofile:
         soft: 65536
         hard: 65536
+
 networks:
   elastic:
     external: true
+
 volumes:
   elastic_data:
     driver: local
