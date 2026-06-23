@@ -1,6 +1,7 @@
 version: '3.8'
 services:
-  db:
+  mongo:
+    container_name: db_mongo
     image: mvertes/alpine-mongo:latest
     restart: always
     environment:
@@ -11,9 +12,9 @@ services:
     volumes:
       - db:/data/db
     networks:
-      - defaults
+      - db_network
 networks:
-  defaults:
+  db_network:
     external: true
 volumes:
   db:

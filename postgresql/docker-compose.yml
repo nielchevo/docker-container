@@ -1,4 +1,3 @@
-version: "3.8"
 services:
   postgresql:
     container_name: db_postgresql
@@ -16,9 +15,9 @@ services:
       - ./db:/docker-entrypoint-initdb.d/
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - defaults
+      - db_network
 networks:
-  defaults:
+  db_network:
     external: true
 volumes:
   postgres_data:
