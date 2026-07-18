@@ -1,0 +1,74 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+  log_level: info
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+
+scrape_configs:
+  # Collect Docker/Podman container logs
+  - job_name: docker
+    docker:
+      host: unix:///run/podman/podman.sock
+      labels:
+        container_name: container_name
+        image_name: image_name
+      relabel_configs:
+        - source_labels: ['__meta_docker_container_name']
+          target_label: 'container'
+        - source_labels: ['__meta_docker_container_id']
+          target_label: 'container_id'
+        - source_labels: ['__meta_docker_image_name']
+          target_label: 'image'
+
+  # Collect systemd journal logs
+  - job_name: systemd-journal
+    journal:
+      json: false
+      max_age: 24h
+      path: /run/log/journal
+      labels:
+        job: systemd-journal
+    relabel_configs:
+      - source_labels: ['__journal__systemd_unit']
+        target_label: 'unit'
+      - source_labels: ['__journal_hostname']
+        target_label: 'hostname'
+
+  # Collect application logs from /var/log
+  - job_name: varlog
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: varlog
+          __path__: /var/log/*/*.log
+    pipeline_stages:
+      - multiline:
+          line_start_pattern: '^\d{4}-\d{2}-\d{2}'
+      - regex:
+          expression: '(?P<time>\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}:\d{2}[.\d]*Z?)\s+(?P<level>\w+)\s+(?P<message>.*)'
+      - labels:
+          level: level
+
+  # Collect syslog
+  - job_name: syslog
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: syslog
+          __path__: /var/log/syslog
+
+  # Collect auth logs
+  - job_name: auth
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: auth
+          __path__: /var/log/auth.log
