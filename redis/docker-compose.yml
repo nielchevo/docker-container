@@ -9,7 +9,7 @@ services:
       - "6379:6379"
     command: redis-server --loglevel notice # Less verbose logging level
     volumes:
-      - data:/data
+      - data:/data,Z
     networks:
       - db_network
 

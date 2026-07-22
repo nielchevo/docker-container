@@ -1,16 +1,16 @@
-version: '3.8'
+version: "3.8"
 services:
   mongo:
     container_name: db_mongo
     image: mvertes/alpine-mongo:latest
     restart: always
     environment:
-     - MONGO_INITDB_ROOT_USERNAME=root
-     - MONGO_INITDB_ROOT_PASSWORD=Password2
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=Password2
     ports:
-     - '27017:27017'
+      - "27017:27017"
     volumes:
-      - db:/data/db
+      - db:/data/db,Z
     networks:
       - db_network
 networks:

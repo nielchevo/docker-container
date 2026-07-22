@@ -10,10 +10,10 @@ services:
       MYSQL_PASSWORD: "Password@2"
       MYSQL_ROOT_PASSWORD: "Password@2"
     ports:
-      - '3306:3306'
+      - "3306:3306"
     volumes:
-      - ./data:/var/lib/mysql
-      - ./init-dump:/docker-entrypoint-initdb.d
+      - ./data:/var/lib/mysql,Z
+      - ./init-dump:/docker-entrypoint-initdb.d,Z
     # healthcheck:
     #   test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
     #   interval: 60s
